@@ -31,12 +31,14 @@ namespace eTickets.Models
         public string Owner { get; set; }
 
         //Relationships
-        [Display(Name = "Select player(s)")]
-        [Required(ErrorMessage = "Player(s) is required")]
-        public List<int> PlayerIds { get; set; }
+        //[Display(Name = "Select player(s)")]
+        //[Required(ErrorMessage = "Player(s) is required")]
+        //public List<int> PlayerIds { get; set; }
 
         [Display(Name = "Select a trophy")]
         [Required(ErrorMessage = "Movie trophy is required")]
         public int TrophyId { get; set; }
+
+        public string UserId { get; set; }
     }
 }

@@ -22,9 +22,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index"><i class="bi bi-film"></i> Teams</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="dropdown-item" asp-controller="Players" asp-action="Index"><i class="bi bi-person-square"></i> Players</a>
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Player") || User.IsInRole("Admin")))
+                        {
+                            <li class="nav-item">
+                            <a class="dropdown-item" asp-controller="Player" asp-action="Index"><i class="bi bi-person-square"></i> Players</a>
                         </li>
+                        }
+                        
                         
                         @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {

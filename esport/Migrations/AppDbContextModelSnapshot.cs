@@ -242,7 +242,12 @@ namespace esport.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Players");
                 });
@@ -284,9 +289,14 @@ namespace esport.Migrations
                     b.Property<int>("TrophyId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TrophyId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Teams");
                 });
@@ -362,6 +372,15 @@ namespace esport.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("eTickets.Models.Player", b =>
+                {
+                    b.HasOne("eTickets.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("eTickets.Models.Player_Team", b =>
                 {
                     b.HasOne("eTickets.Models.Player", "Player")
@@ -389,7 +408,13 @@ namespace esport.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eTickets.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Trophy");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eTickets.Models.Player", b =>

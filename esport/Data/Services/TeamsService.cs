@@ -26,21 +26,22 @@ namespace eTickets.Data.Services
                 Owner = data.Owner,
                 Country = data.Country,
                 TrophyId = data.TrophyId,
+                UserId = data.UserId
             };
             await _context.Teams.AddAsync(newTeam);
             await _context.SaveChangesAsync();
 
-            //Add Movie Actors
-            foreach (var playerId in data.PlayerIds)
-            {
-                var newPlayerTeam = new Player_Team()
-                {
-                    TeamId = newTeam.Id,
-                    PlayerId = playerId
-                };
-                await _context.Player_Teams.AddAsync(newPlayerTeam);
-            }
-            await _context.SaveChangesAsync();
+            ////Add Team Players
+            //foreach (var playerId in data.PlayerIds)
+            //{
+            //    var newPlayerTeam = new Player_Team()
+            //    {
+            //        TeamId = newTeam.Id,
+            //        PlayerId = playerId
+            //    };
+            //    await _context.Player_Teams.AddAsync(newPlayerTeam);
+            //}
+            //await _context.SaveChangesAsync();
         }
 
         public async Task<Team> GetTeamByIdAsync(int id)
@@ -49,6 +50,16 @@ namespace eTickets.Data.Services
                 .Include(c => c.Trophy)
                 .Include(am => am.Player_Teams).ThenInclude(a => a.Player)
                 .FirstOrDefaultAsync(n => n.Id == id);
+
+            return teamDetails;
+        }
+
+        public async Task<IEnumerable<Team>> GetTeamByUserIdAsync(string id)
+        {
+            var teamDetails = await _context.Teams
+                .Include(c => c.Trophy)
+                .Include(am => am.Player_Teams).ThenInclude(a => a.Player)
+                .Where(a=> a.UserId == id).ToListAsync();
 
             return teamDetails;
         }
@@ -83,17 +94,17 @@ namespace eTickets.Data.Services
             _context.Player_Teams.RemoveRange(existingPlayersDb);
             await _context.SaveChangesAsync();
 
-            //Add Team Players
-            foreach (var playerId in data.PlayerIds)
-            {
-                var newPlayerTeam = new Player_Team()
-                {
-                    TeamId = data.Id,
-                    PlayerId = playerId
-                };
-                await _context.Player_Teams.AddAsync(newPlayerTeam);
-            }
-            await _context.SaveChangesAsync();
+            ////Add Team Players
+            //foreach (var playerId in data.PlayerIds)
+            //{
+            //    var newPlayerTeam = new Player_Team()
+            //    {
+            //        TeamId = data.Id,
+            //        PlayerId = playerId
+            //    };
+            //    await _context.Player_Teams.AddAsync(newPlayerTeam);
+            //}
+            //await _context.SaveChangesAsync();
         }
     }
 }

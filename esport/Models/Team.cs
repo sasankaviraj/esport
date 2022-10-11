@@ -27,5 +27,10 @@ namespace eTickets.Models
         [ForeignKey("TrophyId")]
         public Trophy Trophy { get; set; }
 
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
     }
 }

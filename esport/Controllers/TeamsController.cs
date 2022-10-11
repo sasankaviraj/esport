@@ -9,11 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace eTickets.Controllers
 {
-    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Admin+","+UserRoles.TeamOwner)]
+    
     public class TeamsController : Controller
     {
         private readonly ITeamsService _service;
@@ -26,7 +28,8 @@ namespace eTickets.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var allTeams = await _service.GetAllAsync(n => n.Trophy);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var allTeams = await _service.GetTeamByUserIdAsync(userId);
             return View(allTeams);
         }
 
@@ -60,8 +63,8 @@ namespace eTickets.Controllers
         {
             var teamDropdownsData = await _service.GetNewTeamDropdownsValues();
 
-            ViewBag.Cinemas = new SelectList(teamDropdownsData.Trophies, "Id", "Name");
-            ViewBag.Actors = new SelectList(teamDropdownsData.Players, "Id", "FullName");
+            ViewBag.Trophies = new SelectList(teamDropdownsData.Trophies, "Id", "Name");
+            ViewBag.Players = new SelectList(teamDropdownsData.Players, "Id", "FullName");
 
             return View();
         }
@@ -69,6 +72,8 @@ namespace eTickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NewTeamVM team)
         {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            team.UserId = userId;
             if (!ModelState.IsValid)
             {
                 var teamDropdownsData = await _service.GetNewTeamDropdownsValues();
@@ -98,7 +103,7 @@ namespace eTickets.Controllers
                 TrophyId = teamDetail.TrophyId,
                 Country = teamDetail.Country,
                 Owner = teamDetail.Owner,
-                PlayerIds = teamDetail.Player_Teams.Select(n => n.PlayerId).ToList(),
+                //PlayerIds = teamDetail.Player_Teams.Select(n => n.PlayerId).ToList(),
             };
 
             var teamDropdownsData = await _service.GetNewTeamDropdownsValues();

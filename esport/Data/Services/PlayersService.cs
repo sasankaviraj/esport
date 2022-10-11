@@ -10,6 +10,10 @@ namespace eTickets.Data.Services
 {
     public class PlayerService : EntityBaseRepository<Player>, IPlayersService
     {
-        public PlayerService(AppDbContext context) : base(context) { }
+
+        public PlayerService(AppDbContext context) : base(context) {
+        }
+
+ 
     }
 }

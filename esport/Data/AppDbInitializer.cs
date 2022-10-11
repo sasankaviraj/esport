@@ -178,8 +178,10 @@ namespace eTickets.Data
 
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                if (!await roleManager.RoleExistsAsync(UserRoles.TeamOwner))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.TeamOwner));
+                if (!await roleManager.RoleExistsAsync(UserRoles.Player))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Player));
 
                 //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -213,7 +215,7 @@ namespace eTickets.Data
                         EmailConfirmed = true
                     };
                     await userManager.CreateAsync(newAppUser, "Coding@1234?");
-                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.TeamOwner);
                 }
             }
         }

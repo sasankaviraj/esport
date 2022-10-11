@@ -14,5 +14,7 @@ namespace eTickets.Data.Services
         Task<NewTeamDropdownsVM> GetNewTeamDropdownsValues();
         Task AddNewTeamAsync(NewTeamVM data);
         Task UpdateTeamAsync(NewTeamVM data);
+
+        Task<IEnumerable<Team>> GetTeamByUserIdAsync(string id);
     }
 }

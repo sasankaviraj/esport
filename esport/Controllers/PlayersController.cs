@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace eTickets.Controllers
 {
-    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Admin+","+UserRoles.Player)]
     public class PlayerController : Controller
     {
         private readonly IPlayersService _service;
@@ -28,7 +29,7 @@ namespace eTickets.Controllers
             return View(data);
         }
 
-        //Get: Actors/Create
+        //Get: Players/Create
         public IActionResult Create()
         {
             return View();
@@ -37,6 +38,8 @@ namespace eTickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("FullName,Sport,Bio,Country")]Player player)
         {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            player.UserId = userId;
             if (!ModelState.IsValid)
             {
                 return View(player);
@@ -55,7 +58,7 @@ namespace eTickets.Controllers
             return View(playerDetails);
         }
 
-        //Get: Actors/Edit/1
+        //Get: Players/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);
@@ -74,7 +77,7 @@ namespace eTickets.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //Get: Actors/Delete/1
+        //Get: Players/Delete/1
         public async Task<IActionResult> Delete(int id)
         {
             var playerDetails = await _service.GetByIdAsync(id);
