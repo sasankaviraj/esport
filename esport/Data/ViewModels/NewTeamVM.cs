@@ -30,6 +30,14 @@ namespace eTickets.Models
         [Required(ErrorMessage = "Owner name is required")]
         public string Owner { get; set; }
 
+        [Display(Name = "Maximum Price")]
+        [Required(ErrorMessage = "Maximum Price is required")]
+        public string MaxPrice { get; set; }
+
+        [Display(Name = "Logo Url")]
+        [Required(ErrorMessage = "Logo Url is required")]
+        public string LogoUrl { get; set; }
+
         //Relationships
         //[Display(Name = "Select player(s)")]
         //[Required(ErrorMessage = "Player(s) is required")]

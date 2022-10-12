@@ -1,4 +1,5 @@
-﻿using eTickets.Models;
+﻿using esport.Models;
+using eTickets.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,7 +34,7 @@ namespace eTickets.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player_Team> Player_Teams { get; set; }
         public DbSet<Trophy> Trophies { get; set; }
-        //public DbSet<Producer> Producers { get; set; }
+        public DbSet<Auction> Auctions { get; set; }
 
 
         ////Orders related tables

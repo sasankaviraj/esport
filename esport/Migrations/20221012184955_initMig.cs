@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace esport.Migrations
 {
-    public partial class initialMig : Migration
+    public partial class initMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,6 +177,7 @@ namespace esport.Migrations
                     Sport = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -200,6 +201,8 @@ namespace esport.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaxPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrophyId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -218,6 +221,48 @@ namespace esport.Migrations
                         principalTable: "Trophies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Auctions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrophyId = table.Column<int>(type: "int", nullable: true),
+                    PlayerId = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TeamId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsSold = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Auctions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Auctions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Auctions_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Auctions_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Auctions_Trophies_TrophyId",
+                        column: x => x.TrophyId,
+                        principalTable: "Trophies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -284,6 +329,26 @@ namespace esport.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Auctions_PlayerId",
+                table: "Auctions",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auctions_TeamId",
+                table: "Auctions",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auctions_TrophyId",
+                table: "Auctions",
+                column: "TrophyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auctions_UserId",
+                table: "Auctions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Player_Teams_TeamId",
                 table: "Player_Teams",
                 column: "TeamId");
@@ -320,6 +385,9 @@ namespace esport.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Auctions");
 
             migrationBuilder.DropTable(
                 name: "Player_Teams");

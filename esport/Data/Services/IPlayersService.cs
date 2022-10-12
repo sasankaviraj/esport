@@ -9,6 +9,6 @@ namespace eTickets.Data.Services
 {
     public interface IPlayersService:IEntityBaseRepository<Player>
     {
-
+        Task<Player> GetPlayerByUserIdAsync(string id);
     }
 }

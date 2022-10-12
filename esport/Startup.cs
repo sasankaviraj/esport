@@ -1,3 +1,5 @@
+using esport.Data.Services;
+using esport.Models;
 using eTickets.Data;
 //using eTickets.Data.Cart;
 using eTickets.Data.Services;
@@ -39,7 +41,7 @@ namespace eTickets
             services.AddScoped<IPlayersService, PlayerService>();
             services.AddScoped<ITrophyService, TrophyService>();
             services.AddScoped<ITeamsService, TeamsService>();
-
+            services.AddScoped<IAuctionService, AuctionService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 

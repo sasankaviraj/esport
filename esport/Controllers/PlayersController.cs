@@ -36,7 +36,7 @@ namespace eTickets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName,Sport,Bio,Country")]Player player)
+        public async Task<IActionResult> Create([Bind("FullName,Sport,Bio,Country,ImageUrl")]Player player)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             player.UserId = userId;

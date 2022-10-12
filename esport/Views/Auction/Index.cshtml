@@ -1,0 +1,72 @@
+﻿@using esport.Models
+@model IEnumerable<Auction>
+
+@{
+    ViewData["Title"] = "Auction";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Auction</h4>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Trophy</th>
+                    <th>Team</th>
+                    <th>Player</th>
+                    <th>Sold Price</th>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Team Owner"))
+                    {
+                        <th>Bid</th>     
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th>Set Base Price</th>     
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var auction in Model)
+                {
+                <tr>
+                    <td class="align-middle">@auction.Trophy.Name</td>
+                        @if (auction.Team != null)
+                        {
+                            <td class="align-middle">@auction.Team.Name</td>
+                        }else
+                        {
+                            <td class="align-middle">Not yet assigned</td>
+
+                        }
+                        <td class="align-middle">@auction.Player.FullName</td>
+                        @if (auction.Price != null)
+                        {
+                            <td class="align-middle">@auction.Price</td>
+                        }else
+                        {
+                            <td class="align-middle">Base price is not assigned</td>
+
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Team Owner"))
+                        {
+                            <td class="align-middle">
+                                <a class="btn btn-outline-success float-right" asp-action="Bid" asp-route-id="@auction.Id">Bid</a>  
+                            </td>   
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <td class="align-middle">
+                                <a class="btn btn-outline-success float-right" asp-action="SetBasePrice" asp-route-id="@auction.Id">Set Base Price</a>    
+                            </td> 
+                        }
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@await Html.PartialAsync("_CreateItem", "Auction") 

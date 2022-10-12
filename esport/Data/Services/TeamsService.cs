@@ -25,23 +25,13 @@ namespace eTickets.Data.Services
                 Description = data.Description,
                 Owner = data.Owner,
                 Country = data.Country,
+                MaxPrice = data.MaxPrice,
+                LogoUrl = data.LogoUrl,
                 TrophyId = data.TrophyId,
                 UserId = data.UserId
             };
             await _context.Teams.AddAsync(newTeam);
             await _context.SaveChangesAsync();
-
-            ////Add Team Players
-            //foreach (var playerId in data.PlayerIds)
-            //{
-            //    var newPlayerTeam = new Player_Team()
-            //    {
-            //        TeamId = newTeam.Id,
-            //        PlayerId = playerId
-            //    };
-            //    await _context.Player_Teams.AddAsync(newPlayerTeam);
-            //}
-            //await _context.SaveChangesAsync();
         }
 
         public async Task<Team> GetTeamByIdAsync(int id)
@@ -85,6 +75,8 @@ namespace eTickets.Data.Services
                 dbTeam.Description = data.Description;
                 dbTeam.Owner = data.Owner;
                 dbTeam.Country = data.Country;
+                dbTeam.MaxPrice = data.MaxPrice;
+                dbTeam.LogoUrl = data.LogoUrl;
                 dbTeam.TrophyId = data.TrophyId;
                 await _context.SaveChangesAsync();
             }
@@ -93,18 +85,6 @@ namespace eTickets.Data.Services
             var existingPlayersDb = _context.Player_Teams.Where(n => n.TeamId == data.Id).ToList();
             _context.Player_Teams.RemoveRange(existingPlayersDb);
             await _context.SaveChangesAsync();
-
-            ////Add Team Players
-            //foreach (var playerId in data.PlayerIds)
-            //{
-            //    var newPlayerTeam = new Player_Team()
-            //    {
-            //        TeamId = data.Id,
-            //        PlayerId = playerId
-            //    };
-            //    await _context.Player_Teams.AddAsync(newPlayerTeam);
-            //}
-            //await _context.SaveChangesAsync();
         }
     }
 }

@@ -18,6 +18,8 @@ namespace eTickets.Models
         public string Description { get; set; }
         public string Owner { get; set; }
         public string Country { get; set; }
+        public string MaxPrice { get; set; }
+        public string LogoUrl { get; set; }
 
         //Relationships
         public List<Player_Team> Player_Teams { get; set; }

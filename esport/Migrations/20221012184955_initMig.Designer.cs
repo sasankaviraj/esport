@@ -10,8 +10,8 @@ using eTickets.Data;
 namespace esport.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221011174226_initialMig")]
-    partial class initialMig
+    [Migration("20221012184955_initMig")]
+    partial class initMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -240,6 +240,9 @@ namespace esport.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Sport")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -282,6 +285,12 @@ namespace esport.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaxPrice")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -321,6 +330,44 @@ namespace esport.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Trophies");
+                });
+
+            modelBuilder.Entity("esport.Models.Auction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Price")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TrophyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("TrophyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Auctions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -413,6 +460,33 @@ namespace esport.Migrations
                     b.HasOne("eTickets.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Trophy");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("esport.Models.Auction", b =>
+                {
+                    b.HasOne("eTickets.Models.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
+
+                    b.HasOne("eTickets.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId");
+
+                    b.HasOne("eTickets.Models.Trophy", "Trophy")
+                        .WithMany()
+                        .HasForeignKey("TrophyId");
+
+                    b.HasOne("eTickets.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Team");
 
                     b.Navigation("Trophy");
 

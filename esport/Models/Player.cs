@@ -29,6 +29,7 @@ namespace eTickets.Models
         [Display(Name = "Country")]
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
+        public string ImageUrl { get; set; }
 
         //Relationships
         public string UserId { get; set; }
