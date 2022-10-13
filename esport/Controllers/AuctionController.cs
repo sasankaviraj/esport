@@ -1,8 +1,10 @@
 ﻿using esport.Data.Services;
 using esport.Models;
 using eTickets.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -106,5 +108,23 @@ namespace esport.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [AllowAnonymous]
+        public async Task<IActionResult> SoldPlayers()
+        {
+            var data = await _service.GetAuctionDetailsAsync();
+
+            var sold = data.Where(n => n.IsSold == true).ToList();
+            return View(sold);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> UnsoldPlayers()
+        {
+            var data = await _service.GetAuctionDetailsAsync();
+
+            var unsold = data.Where(n => n.IsSold == false).ToList();
+            return View(unsold);
+        }
     }
 }
