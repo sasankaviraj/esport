@@ -22,11 +22,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index"><i class="bi bi-film"></i> Teams</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
+                        <li class="nav-item">
                             <a class="dropdown-item" asp-controller="Player" asp-action="Index"><i class="bi bi-person-square"></i> Players</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
                         <li class="nav-item">
                             <a class="dropdown-item" asp-controller="Auction" asp-action="Index"><i class="bi bi-person-square"></i> Auction</a>
                         </li>
