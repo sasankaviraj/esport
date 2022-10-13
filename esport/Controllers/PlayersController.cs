@@ -94,5 +94,21 @@ namespace eTickets.Controllers
             await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allPlayers = await _service.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+
+                var filteredResultNew = allPlayers.Where(n => string.Equals(n.FullName, searchString, StringComparison.CurrentCultureIgnoreCase) || string.Equals(n.Bio, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+                return View("Index", filteredResultNew);
+            }
+
+            return View("Index", allPlayers);
+        }
     }
 }

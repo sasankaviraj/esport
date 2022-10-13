@@ -18,6 +18,7 @@
                                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Team Owner")))
                                     {
                                         <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                        <a class="text-white float-right" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-display"></i></a>
                                     }
                                 </h5>
                             </p>

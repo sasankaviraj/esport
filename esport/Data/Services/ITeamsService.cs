@@ -1,4 +1,5 @@
-﻿using eTickets.Data.Base;
+﻿using esport.Models;
+using eTickets.Data.Base;
 using eTickets.Data.ViewModels;
 using eTickets.Models;
 using System;
@@ -11,6 +12,7 @@ namespace eTickets.Data.Services
     public interface ITeamsService:IEntityBaseRepository<Team>
     {
         Task<Team> GetTeamByIdAsync(int id);
+        Task<IEnumerable<Auction>> GetPlayersByTeamAsync(int id);
         Task<NewTeamDropdownsVM> GetNewTeamDropdownsValues();
         Task AddNewTeamAsync(NewTeamVM data);
         Task UpdateTeamAsync(NewTeamVM data);

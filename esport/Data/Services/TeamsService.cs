@@ -1,4 +1,5 @@
-﻿using eTickets.Data.Base;
+﻿using esport.Models;
+using eTickets.Data.Base;
 using eTickets.Data.ViewModels;
 using eTickets.Models;
 using Microsoft.EntityFrameworkCore;
@@ -85,6 +86,16 @@ namespace eTickets.Data.Services
             var existingPlayersDb = _context.Player_Teams.Where(n => n.TeamId == data.Id).ToList();
             _context.Player_Teams.RemoveRange(existingPlayersDb);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Auction>> GetPlayersByTeamAsync(int id)
+        {
+            var teamDetails = await _context.Auctions
+                .Include(c => c.Player)
+                .Include(am => am.Trophy)
+                .Include(am => am.Team)
+                .Where(a => a.TeamId == id).ToListAsync();
+            return teamDetails;
         }
     }
 }
