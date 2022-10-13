@@ -61,19 +61,24 @@ namespace eTickets.Controllers
         //Get: Players/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
-            var actorDetails = await _service.GetByIdAsync(id);
-            if (actorDetails == null) return View("NotFound");
-            return View(actorDetails);
+            var playerDetails = await _service.GetByIdAsync(id);
+            if (playerDetails == null) return View("NotFound");
+            return View(playerDetails);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Sport,Bio,Country")] Player player)
         {
+            var playerDetails = await _service.GetByIdAsync(id);
+            playerDetails.FullName = player.FullName;
+            playerDetails.Bio = player.Bio;
+            playerDetails.Sport = player.Sport;
+            playerDetails.Country = player.Country;
             if (!ModelState.IsValid)
             {
                 return View(player);
             }
-            await _service.UpdateAsync(id, player);
+            await _service.UpdateAsync(id, playerDetails);
             return RedirectToAction(nameof(Index));
         }
 
