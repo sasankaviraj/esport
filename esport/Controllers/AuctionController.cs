@@ -75,6 +75,7 @@ namespace esport.Controllers
             var auctionDetails = await _service.GetByIdAsync(id);
             auctionDetails.Price = auction.Price;
             auctionDetails.TeamId = auction.TeamId;
+            auctionDetails.IsSold = true;
             
             if (!ModelState.IsValid)
             {
