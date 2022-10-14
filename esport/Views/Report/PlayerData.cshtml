@@ -1,0 +1,57 @@
+﻿@using System.Security.Claims
+@using esport.Models
+@model IEnumerable<Player>
+
+@{
+    ViewData["Title"] = "List of Players";
+}
+<br />
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <table id="example" class="table display nowrap" style="width:100%">
+            <thead>
+                <tr class="text-center">
+                    <th>Player</th>
+                    <th>Sport</th>
+                    <th>Bio</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Sport)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Bio)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                   
+
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+    </script>
+}

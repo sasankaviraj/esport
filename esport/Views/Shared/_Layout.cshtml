@@ -3,13 +3,66 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - esport</title>
+    <title>@ViewData["Title"] - E-Sport</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 </head>
 <body>
-    <header>
+    <!-- Navigation-->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light static-top">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Teams" asp-action="Index">E-SPORT</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index"><i class="bi bi-people-fill"></i> Teams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Player" asp-action="Index"><i class="bi bi-person-square"></i> Players</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Auction" asp-action="Index"><i class="bi bi-person-square"></i> Auction</a>
+                        </li>
+
+
+                        @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <div class="dropdown show">
+                              <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Management
+                              </a>
+
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item"asp-controller="Trophy" asp-action="Index">Trophy</a>
+                                <a class="dropdown-item" asp-controller="Report" asp-action="Index">Reports</a>
+                              </div>
+                            </div>
+                        }
+                        
+                    </ul>
+
+                    <form class="form-inline my-2 my-lg-0" asp-controller="Player" asp-action="Filter" style="padding-right: 25px;">
+                        <input name="searchString" type="text" class="form-control" placeholder="Search for a player..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+
+                    <ul class="navbar-nav">
+                        
+                    </ul>
+
+                    <partial name="_Identity.cshtml" />
+                </div>
+            </div>
+        </nav>
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Teams" asp-action="Index">E-SPORT</a>
@@ -57,7 +110,8 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>*@
+    
     <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -65,7 +119,7 @@
 
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-bottom">
         <div class="container">
             &copy; 2021 - esport
         </div>
@@ -75,6 +129,14 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

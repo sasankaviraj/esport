@@ -136,34 +136,7 @@ namespace eTickets.Data
                     context.SaveChanges();
                 }
                 //Players & Teams
-                if (!context.Player_Teams.Any())
-                {
-                    context.Player_Teams.AddRange(new List<Player_Team>()
-                    {
-                        new Player_Team()
-                        {
-                            PlayerId = 1,
-                            TeamId = 1
-                        },
-                        new Player_Team()
-                        {
-                            PlayerId = 3,
-                            TeamId = 1
-                        },
-
-                         new Player_Team()
-                        {
-                            PlayerId = 1,
-                            TeamId = 2
-                        },
-                         new Player_Team()
-                        {
-                            PlayerId = 4,
-                            TeamId = 2
-                        },
-                    });
-                    context.SaveChanges();
-                }
+                
             }
 
         }
