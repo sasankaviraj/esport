@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "List of Teams";
 }
-
+    @if (!User.Identity.IsAuthenticated)
+    {
+        
+    }
 <div class="row">
     @foreach (var item in Model)
     {
