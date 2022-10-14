@@ -10,6 +10,8 @@ namespace eTickets.Models
 {
     public class Player:IEntityBase
     {
+
+        // Create Player class to create the data fileld of player class
         [Key]
         public int Id { get; set; }
 

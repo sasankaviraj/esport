@@ -29,6 +29,7 @@
                         <div class="card-body">
                             <p class="card-text">@item.Description</p>
                             <p class="card-text"><b>Trophy: </b>@item.Trophy.Name</p>
+                            <img class="border-info rounded-circle" src="@Url.Content(@item.LogoUrl)" style="max-width: 150px" id="ProfilePicturePreview" />
 
 
                         </div>
@@ -41,4 +42,5 @@
 </div>
 @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Team Owner")))
 {
-@await Html.PartialAsync("_CreateItem", "Teams") }
+@await Html.PartialAsync("_CreateItem", "Teams") 
+}
